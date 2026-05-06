@@ -1,0 +1,10 @@
+target/
+*.class
+*.db
+*.log
+.idea/
+.vscode/
+*.jar
+*.exe
+archive.db
+bin/
