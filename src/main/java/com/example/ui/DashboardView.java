@@ -472,18 +472,36 @@ public class DashboardView {
 
         // Notification Bell
         notificationBtn = createIconBtn("🔔", "Notifications");
-        updateNotificationIcon(); // Set initial icon state based on hasUnreadNotifications
         
-        notificationBtn.setOnAction(e -> {
+        String notified = DatabaseHandler.getSetting("v1.2_notified");
+        if (!"true".equals(notified)) {
+            hasUnreadNotifications = true;
+            updateNotificationIcon();
+            
+            notificationBtn.setOnAction(e -> {
+                hasUnreadNotifications = false;
+                updateNotificationIcon();
+                DatabaseHandler.saveSetting("v1.2_notified", "true");
+                
+                String changes = "System Update Version 1.2:\n\n" +
+                               "1. The Grades table is now fully editable.\n" +
+                               "2. Double-click on any cell to edit Grade, Min/Max Score, or GPA Points.\n" +
+                               "3. Press Enter to instantly sync changes to the database.\n" +
+                               "4. Added this notification bell to alert you of system changes.";
+                new Alert(Alert.AlertType.INFORMATION, changes).show();
+                
+                // Reset to default action after reading
+                notificationBtn.setOnAction(evt -> {
+                    new Alert(Alert.AlertType.INFORMATION, "No new notifications.").show();
+                });
+            });
+        } else {
             hasUnreadNotifications = false;
             updateNotificationIcon();
-            new Alert(Alert.AlertType.INFORMATION, "System Update Version 1.2:\n\nThe Grades table is now fully editable. You can now double-click on any row/column in the Academic Grade Scales to edit the Grade, Min Score, Max Score, and GPA Points directly.").show();
-            
-            // Reset to default action after reading
-            notificationBtn.setOnAction(evt -> {
+            notificationBtn.setOnAction(e -> {
                 new Alert(Alert.AlertType.INFORMATION, "No new notifications.").show();
             });
-        });
+        }
 
         Button btnLogout = createIconBtn("🚪", "Logout");
         btnLogout.setOnAction(e -> handleLogout());
