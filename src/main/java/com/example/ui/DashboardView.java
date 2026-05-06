@@ -26,7 +26,7 @@ public class DashboardView {
     private Label brandLabel;
     
     private Button notificationBtn;
-    private boolean hasUnreadNotifications = false;
+    private boolean hasUnreadNotifications = true; // Default to true to show the new feature
 
     private final Map<String, Parent> viewCache = new HashMap<>();
     private final Stack<String> backStack = new Stack<>();
@@ -472,10 +472,17 @@ public class DashboardView {
 
         // Notification Bell
         notificationBtn = createIconBtn("🔔", "Notifications");
+        updateNotificationIcon(); // Set initial icon state based on hasUnreadNotifications
+        
         notificationBtn.setOnAction(e -> {
             hasUnreadNotifications = false;
             updateNotificationIcon();
-            new Alert(Alert.AlertType.INFORMATION, "No new notifications.").show();
+            new Alert(Alert.AlertType.INFORMATION, "System Update Version 1.2:\n\nThe Grades table is now fully editable. You can now double-click on any row/column in the Academic Grade Scales to edit the Grade, Min Score, Max Score, and GPA Points directly.").show();
+            
+            // Reset to default action after reading
+            notificationBtn.setOnAction(evt -> {
+                new Alert(Alert.AlertType.INFORMATION, "No new notifications.").show();
+            });
         });
 
         Button btnLogout = createIconBtn("🚪", "Logout");
