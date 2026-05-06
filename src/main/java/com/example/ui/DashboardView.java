@@ -506,11 +506,15 @@ public class DashboardView {
             hasUnreadNotifications = true;
             updateNotificationIcon();
             
-            // Show a quick tooltip or toast if desired, but for now we update the icon
             notificationBtn.setOnAction(e -> {
                 hasUnreadNotifications = false;
                 updateNotificationIcon();
                 new Alert(Alert.AlertType.INFORMATION, "System Update:\n" + message).show();
+                
+                // Reset to default action after reading
+                notificationBtn.setOnAction(evt -> {
+                    new Alert(Alert.AlertType.INFORMATION, "No new notifications.").show();
+                });
             });
         });
     }
