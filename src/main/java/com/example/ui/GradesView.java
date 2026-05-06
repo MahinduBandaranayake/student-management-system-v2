@@ -124,17 +124,22 @@ public class GradesView {
         }
 
         public int getId() { return id.get(); }
+        public SimpleIntegerProperty idProperty() { return id; }
         
         public String getGradeName() { return gradeName.get(); }
         public void setGradeName(String name) { this.gradeName.set(name); }
+        public SimpleStringProperty gradeNameProperty() { return gradeName; }
         
         public double getMinScore() { return minScore.get(); }
         public void setMinScore(double min) { this.minScore.set(min); }
+        public SimpleDoubleProperty minScoreProperty() { return minScore; }
         
         public double getMaxScore() { return maxScore.get(); }
         public void setMaxScore(double max) { this.maxScore.set(max); }
+        public SimpleDoubleProperty maxScoreProperty() { return maxScore; }
         
         public double getGpaPoints() { return gpaPoints.get(); }
         public void setGpaPoints(double gpa) { this.gpaPoints.set(gpa); }
+        public SimpleDoubleProperty gpaPointsProperty() { return gpaPoints; }
     }
 }
